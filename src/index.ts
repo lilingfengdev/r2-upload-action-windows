@@ -93,7 +93,8 @@ const run = async (config: R2Config) => {
         console.log(config.sourceDir);
         console.log(config.destinationDir);
         const fileName = file.replace(config.sourceDir, "");
-        const fileKey = path.join(config.destinationDir !== "" ? config.destinationDir : config.sourceDir, fileName);
+        const fileKey = path.join(config.destinationDir !== "" ? config.destinationDir : config.sourceDir, fileName)
+            .replace("\\","/");
 
         if (fileKey.includes('.gitkeep'))
             continue;
@@ -127,7 +128,8 @@ const run = async (config: R2Config) => {
 
 const uploadMultiPart: UploadHandler<CompleteMultipartUploadCommandOutput> = async (file: string, config: R2Config) => {
     const fileName = file.replace(config.sourceDir, "");
-    const fileKey = path.join(config.destinationDir !== "" ? config.destinationDir : config.sourceDir, fileName);
+    const fileKey = path.join(config.destinationDir !== "" ? config.destinationDir : config.sourceDir, fileName)
+        .replace("\\","/");
     const mimeType = mime.getType(file);
 
     const createMultiPartParams: CreateMultipartUploadCommandInput = {
@@ -228,7 +230,8 @@ const uploadMultiPart: UploadHandler<CompleteMultipartUploadCommandOutput> = asy
 
 const putObject: UploadHandler<PutObjectCommandOutput> = async (file, config) => {
     const fileName = file.replace(config.sourceDir, "");
-    const fileKey = path.join(config.destinationDir !== "" ? config.destinationDir : config.sourceDir, fileName);
+    const fileKey = path.join(config.destinationDir !== "" ? config.destinationDir : config.sourceDir, fileName)
+        .replace("\\","/");
     const mimeType = mime.getType(file);
 
     console.info(`using put object upload for ${fileKey}`);
